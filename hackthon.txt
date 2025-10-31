@@ -1,0 +1,46 @@
+import { useState } from "react";
+import { Hero } from "./components/Hero";
+import { RiskAssessment } from "./components/RiskAssessment";
+import { ScreeningSchedule } from "./components/ScreeningSchedule";
+import { SymptomChecker } from "./components/SymptomChecker";
+import { Statistics } from "./components/Statistics";
+import { WarningSignsInfo } from "./components/WarningSignsInfo";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState("assessment");
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <Hero />
+      <Statistics />
+      
+      <div className="container mx-auto px-4 py-12 max-w-7xl">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-4 mb-8">
+            <TabsTrigger value="assessment">Risk Assessment</TabsTrigger>
+            <TabsTrigger value="symptoms">Symptom Checker</TabsTrigger>
+            <TabsTrigger value="schedule">Screening Schedule</TabsTrigger>
+            <TabsTrigger value="warning-signs">Warning Signs</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="assessment">
+            <RiskAssessment />
+          </TabsContent>
+          
+          <TabsContent value="symptoms">
+            <SymptomChecker />
+          </TabsContent>
+          
+          <TabsContent value="schedule">
+            <ScreeningSchedule />
+          </TabsContent>
+          
+          <TabsContent value="warning-signs">
+            <WarningSignsInfo />
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+}
