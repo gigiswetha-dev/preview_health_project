@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Early Diagnosis Saves Lives - Health Screening Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-button {
+            cursor: pointer;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: #f3f4f6;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-button:hover {
+            background: #e5e7eb;
+        }
+
+        .tab-button.active {
+            background: white;
+            border-bottom-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .accordion-button {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .accordion-button:hover {
+            background: #f9fafb;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-content.open {
+            max-height: 5000px;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-primary:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #f9fafb;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 0.75rem;
+            background: #e5e7eb;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #2563eb;
+            transition: width 0.3s ease;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .checkbox {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            border-color: #f59e0b;
+            color: #92400e;
+        }
+
+        .alert-danger {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            border-color: #22c55e;
+            color: #166534;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-outline {
+            background: white;
+            border: 1px solid #d1d5db;
+            color: #4b5563;
+        }
+
+        .badge-secondary {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .tab-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-blue-50 to-white min-h-screen">
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex items-center justify-center gap-4 mb-6">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+            </div>
+            
+            <h1 class="text-center mb-6">Early Diagnosis Saves Lives</h1>
+            
+            <p class="text-center text-blue-100 max-w-3xl mx-auto mb-8 text-lg">
+                Delayed diagnosis of diseases like cancer, diabetes, and heart ailments increases treatment costs and reduces survival rates. 
+                Early detection is your best defense against serious health conditions.
+            </p>
+            
+            <div class="alert alert-info max-w-4xl mx-auto bg-white/10 border-white/20 text-white">
+                <svg class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                    <h4>Take Action Today</h4>
+                    <p class="text-blue-100 mt-1">
+                        Use our free tools to assess your risk, understand warning signs, and create a personalized screening schedule. 
+                        Knowledge and early action can save your life.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="container mx-auto px-4 py-12 max-w-7xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="card p-6 text-center">
+                <svg class="w-8 h-8 mx-auto mb-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                <div class="text-green-600 mb-2" style="font-size: 2rem; font-weight: 700;">90%</div>
+                <p class="text-gray-600">Higher survival rates with early cancer detection</p>
+            </div>
+            <div class="card p-6 text-center">
+                <svg class="w-8 h-8 mx-auto mb-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div class="text-red-600 mb-2" style="font-size: 2rem; font-weight: 700;">4x</div>
+                <p class="text-gray-600">Higher treatment costs for late-stage diagnoses</p>
+            </div>
+            <div class="card p-6 text-center">
+                <svg class="w-8 h-8 mx-auto mb-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div class="text-orange-600 mb-2" style="font-size: 2rem; font-weight: 700;">50%</div>
+                <p class="text-gray-600">Of diabetes cases go undiagnosed for years</p>
+            </div>
+            <div class="card p-6 text-center">
+                <svg class="w-8 h-8 mx-auto mb-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                <div class="text-blue-600 mb-2" style="font-size: 2rem; font-weight: 700;">80%</div>
+                <p class="text-gray-600">Of heart attacks are preventable with early screening</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content with Tabs -->
+    <div class="container mx-auto px-4 py-12 max-w-7xl">
+        <div class="card">
+            <!-- Tab Navigation -->
+            <div class="border-b border-gray-200">
+                <div class="grid grid-cols-4 gap-0">
+                    <button class="tab-button active" onclick="switchTab('assessment')">Risk Assessment</button>
+                    <button class="tab-button" onclick="switchTab('symptoms')">Symptom Checker</button>
+                    <button class="tab-button" onclick="switchTab('schedule')">Screening Schedule</button>
+                    <button class="tab-button" onclick="switchTab('warning-signs')">Warning Signs</button>
+                </div>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="p-6">
+                <!-- Risk Assessment Tab -->
+                <div id="assessment-tab" class="tab-content active">
+                    <div class="mb-6">
+                        <h2 class="mb-2">Health Risk Assessment</h2>
+                        <p class="text-gray-600">
+                            Complete these quick assessments to understand your risk factors for common diseases. 
+                            This is not a medical diagnosis - please consult healthcare professionals for proper evaluation.
+                        </p>
+                    </div>
+
+                    <!-- Risk Assessment Sub-tabs -->
+                    <div class="border-b border-gray-200 mb-6">
+                        <div class="grid grid-cols-3 gap-0">
+                            <button class="tab-button active" onclick="switchRiskTab('diabetes')">Diabetes</button>
+                            <button class="tab-button" onclick="switchRiskTab('heart')">Heart Disease</button>
+                            <button class="tab-button" onclick="switchRiskTab('cancer')">Cancer</button>
+                        </div>
+                    </div>
+
+                    <!-- Diabetes Calculator -->
+                    <div id="diabetes-risk" class="tab-content active">
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block mb-2 font-medium">Age</label>
+                                    <input type="number" id="diabetes-age" placeholder="Enter your age">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-medium">BMI (Body Mass Index)</label>
+                                    <input type="number" id="diabetes-bmi" step="0.1" placeholder="Enter your BMI">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-medium">Physical Activity Level</label>
+                                    <select id="diabetes-activity">
+                                        <option value="">Select activity level</option>
+                                        <option value="high">High (30+ min daily)</option>
+                                        <option value="moderate">Moderate (2-3 times/week)</option>
+                                        <option value="low">Low (rarely active)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-medium">Family History of Diabetes</label>
+                                    <select id="diabetes-family">
+                                        <option value="">Select option</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-full" onclick="calculateDiabetesRisk()">Calculate Diabetes Risk</button>
+                            <div id="diabetes-result"></div>
+                        </div>
+                    </div>
+
+                    <!-- Heart Disease Calculator -->
+                    <div id="heart-risk" class="tab-content">
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block mb-2 font-medium">Age</label>
+                                    <input type="number" id="heart-age" placeholder="Enter your age">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-medium">Cholesterol Level</label>
+                                    <select id="heart-cholesterol">
+                                        <option value="">Select level</option>
+                                        <option value="normal">Normal (<200 mg/dL)</option>
+                                        <option value="borderline">Borderline (200-239)</option>
+                                        <option value="high">High (240+)</option>
+                                        <option value="unknown">Don't know</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-medium">Blood Pressure</label>
+                                    <select id="heart-bp">
+                                        <option value="">Select status</option>
+                                        <option value="normal">Normal (<120/80)</option>
+                                        <option value="elevated">Elevated (120-139/80-89)</option>
+                                        <option value="high">High (140+/90+)</option>
+                                        <option value="unknown">Don't know</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-medium">Do you smoke?</label>
+                                    <select id="heart-smoking">
+                                        <option value="">Select option</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-medium">Regular Exercise (3+ times/week)?</label>
+                                    <select id="heart-exercise">
+                                        <option value="">Select option</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-full" onclick="calculateHeartRisk()">Calculate Heart Disease Risk</button>
+                            <div id="heart-result"></div>
+                        </div>
+                    </div>
+
+                    <!-- Cancer Calculator -->
+                    <div id="cancer-risk" class="tab-content">
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block mb-2 font-medium">Age</label>
+                                    <input type="number" id="cancer-age" placeholder="Enter your age">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-medium">Tobacco Use</label>
+                                    <select id="cancer-tobacco">
+                                        <option value="">Select option</option>
+                                        <option value="never">Never used</option>
+                                        <option value="former">Former user</option>
+                                        <option value="current">Current user</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-medium">Family History of Cancer</label>
+                                    <select id="cancer-family">
+                                        <option value="">Select option</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-medium">Up-to-date with Cancer Screenings?</label>
+                                    <select id="cancer-screening">
+                                        <option value="">Select option</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-medium">Diet Quality</label>
+                                    <select id="cancer-diet">
+                                        <option value="">Select option</option>
+                                        <option value="excellent">Excellent (lots of fruits/vegetables)</option>
+                                        <option value="good">Good (balanced)</option>
+                                        <option value="poor">Poor (processed foods)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-full" onclick="calculateCancerRisk()">Calculate Cancer Risk</button>
+                            <div id="cancer-result"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Symptom Checker Tab -->
+                <div id="symptoms-tab" class="tab-content">
+                    <div class="mb-6">
+                        <h2 class="mb-2">Symptom Checker</h2>
+                        <p class="text-gray-600">
+                            Select any symptoms you're experiencing. This tool helps identify patterns but is NOT a substitute for medical diagnosis.
+                        </p>
+                    </div>
+
+                    <div class="alert alert-info mb-6">
+                        <svg class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h4>Important Disclaimer</h4>
+                            <p class="mt-1">
+                                If you're experiencing severe symptoms (chest pain, difficulty breathing, sudden weakness), seek emergency medical care immediately.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <h3>Diabetes Symptoms</h3>
+                                <span class="badge badge-outline">Type 2 Diabetes</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="diabetes-symptoms">
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="diabetes" value="frequent-urination">
+                                    <span>Frequent urination</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="diabetes" value="excessive-thirst">
+                                    <span>Excessive thirst</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="diabetes" value="unexplained-weight-loss">
+                                    <span>Unexplained weight loss</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="diabetes" value="blurred-vision">
+                                    <span>Blurred vision</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="diabetes" value="slow-healing">
+                                    <span>Slow healing wounds</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="diabetes" value="tingling-hands">
+                                    <span>Tingling in hands/feet</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <h3>Heart Disease Symptoms</h3>
+                                <span class="badge badge-outline">Cardiovascular</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="heart" value="chest-pain">
+                                    <span>Chest pain or discomfort</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="heart" value="shortness-breath">
+                                    <span>Shortness of breath</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="heart" value="irregular-heartbeat">
+                                    <span>Irregular heartbeat</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="heart" value="fatigue-unusual">
+                                    <span>Unusual fatigue</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="heart" value="swollen-legs">
+                                    <span>Swollen legs/ankles</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="heart" value="dizziness">
+                                    <span>Dizziness or lightheadedness</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <h3>Cancer Warning Signs</h3>
+                                <span class="badge badge-outline">Various Types</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="cancer" value="unexplained-lump">
+                                    <span>Unexplained lump or swelling</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="cancer" value="persistent-cough">
+                                    <span>Persistent cough or hoarseness</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="cancer" value="changes-bowel">
+                                    <span>Changes in bowel/bladder habits</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="cancer" value="unusual-bleeding">
+                                    <span>Unusual bleeding or discharge</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="cancer" value="persistent-pain">
+                                    <span>Persistent pain</span>
+                                </label>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox symptom-check" data-condition="cancer" value="unexplained-fever">
+                                    <span>Unexplained fever or night sweats</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <button class="btn btn-primary flex-1" onclick="analyzeSymptoms()">
+                                Analyze Symptoms (<span id="symptom-count">0</span>)
+                            </button>
+                            <button class="btn btn-secondary" onclick="resetSymptoms()">Reset</button>
+                        </div>
+
+                        <div id="symptom-result"></div>
+                    </div>
+                </div>
+
+                <!-- Screening Schedule Tab -->
+                <div id="schedule-tab" class="tab-content">
+                    <div class="mb-6">
+                        <h2 class="mb-2">Personalized Screening Schedule</h2>
+                        <p class="text-gray-600">
+                            Get a customized list of recommended health screenings based on your age and gender. 
+                            These guidelines follow standard medical recommendations but should be discussed with your healthcare provider.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-2 font-medium">Your Age</label>
+                                <input type="number" id="schedule-age" placeholder="Enter your age">
+                            </div>
+                            <div>
+                                <label class="block mb-2 font-medium">Gender</label>
+                                <select id="schedule-gender">
+                                    <option value="">Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary w-full" onclick="generateSchedule()">Generate My Screening Schedule</button>
+
+                        <div id="schedule-result"></div>
+                    </div>
+                </div>
+
+                <!-- Warning Signs Tab -->
+                <div id="warning-signs-tab" class="tab-content">
+                    <div class="mb-6">
+                        <h2 class="mb-2">Warning Signs to Watch For</h2>
+                    </div>
+
+                    <div class="alert alert-danger mb-6">
+                        <svg class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <div>
+                            <h4>Emergency Warning Signs</h4>
+                            <p class="mt-1">
+                                Call emergency services (911) immediately if experiencing: severe chest pain, difficulty breathing, 
+                                sudden weakness/numbness, severe bleeding, loss of consciousness, or signs of stroke (facial drooping, 
+                                arm weakness, speech difficulty).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Diabetes Accordion -->
+                        <div class="card overflow-hidden">
+                            <button class="accordion-button w-full p-4 flex items-center justify-between" onclick="toggleAccordion('diabetes-warning')">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                    <span class="font-semibold">Diabetes Warning Signs</span>
+                                </div>
+                                <svg class="w-5 h-5 transform transition-transform" id="diabetes-warning-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content" id="diabetes-warning-content">
+                                <div class="p-6 border-t border-gray-200 space-y-4">
+                                    <h3>Early Warning Signs of Diabetes</h3>
+                                    <p class="text-gray-600">Type 2 diabetes often develops slowly. Recognizing early signs can lead to earlier diagnosis and treatment.</p>
+                                    
+                                    <div class="space-y-3">
+                                        <div class="border-l-4 border-orange-500 pl-4">
+                                            <h4>Increased Thirst and Frequent Urination</h4>
+                                            <p class="text-gray-600">
+                                                Excess sugar in your blood causes fluid to be pulled from tissues, making you feel thirsty. 
+                                                You may drink and urinate more than usual.
+                                            </p>
+                                        </div>
+                                        <div class="border-l-4 border-orange-500 pl-4">
+                                            <h4>Unexplained Weight Loss</h4>
+                                            <p class="text-gray-600">
+                                                When you lose glucose through frequent urination, you also lose calories. 
+                                                You might lose weight even though you're eating normally.
+                                            </p>
+                                        </div>
+                                        <div class="border-l-4 border-orange-500 pl-4">
+                                            <h4>Blurred Vision</h4>
+                                            <p class="text-gray-600">
+                                                If your blood sugar is too high, fluid may be pulled from the lenses of your eyes, 
+                                                affecting your ability to focus clearly.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-info">
+                                        <svg class="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <div>
+                                            <h4>Action Steps</h4>
+                                            <p class="mt-1">
+                                                If you experience any of these symptoms, especially multiple symptoms, schedule a blood glucose test with your healthcare provider.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Heart Disease Accordion -->
+                        <div class="card overflow-hidden">
+                            <button class="accordion-button w-full p-4 flex items-center justify-between" onclick="toggleAccordion('heart-warning')">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                    </svg>
+                                    <span class="font-semibold">Heart Disease Warning Signs</span>
+                                </div>
+                                <svg class="w-5 h-5 transform transition-transform" id="heart-warning-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content" id="heart-warning-content">
+                                <div class="p-6 border-t border-gray-200 space-y-4">
+                                    <h3>Early Warning Signs of Heart Disease</h3>
+                                    <p class="text-gray-600">Heart disease can develop silently over years. These signs indicate you should see a cardiologist.</p>
+                                    
+                                    <div class="space-y-3">
+                                        <div class="border-l-4 border-red-500 pl-4">
+                                            <h4>Chest Discomfort or Pain (Angina)</h4>
+                                            <p class="text-gray-600">
+                                                Pressure, tightness, or pain in your chest that may spread to your shoulders, arms, neck, jaw, or back.
+                                            </p>
+                                        </div>
+                                        <div class="border-l-4 border-red-500 pl-4">
+                                            <h4>Shortness of Breath</h4>
+                                            <p class="text-gray-600">
+                                                Difficulty breathing or feeling winded during normal activities or at rest.
+                                            </p>
+                                        </div>
+                                        <div class="border-l-4 border-red-500 pl-4">
+                                            <h4>Irregular Heartbeat</h4>
+                                            <p class="text-gray-600">
+                                                Heart palpitations, fluttering, or feeling like your heart is racing or skipping beats.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-danger">
+                                        <svg class="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                        </svg>
+                                        <div>
+                                            <h4>Urgent: Heart Attack Warning Signs</h4>
+                                            <p class="mt-1">
+                                                <strong>Call 911 immediately if experiencing:</strong> Severe chest pain or pressure, pain radiating to arm/jaw, 
+                                                shortness of breath, cold sweats, nausea, or lightheadedness.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cancer Accordion -->
+                        <div class="card overflow-hidden">
+                            <button class="accordion-button w-full p-4 flex items-center justify-between" onclick="toggleAccordion('cancer-warning')">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                    </svg>
+                                    <span class="font-semibold">Cancer Warning Signs</span>
+                                </div>
+                                <svg class="w-5 h-5 transform transition-transform" id="cancer-warning-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content" id="cancer-warning-content">
+                                <div class="p-6 border-t border-gray-200 space-y-4">
+                                    <h3>Cancer Warning Signs to Watch For</h3>
+                                    <p class="text-gray-600">While these symptoms can have many causes, persistent symptoms warrant medical evaluation.</p>
+                                    
+                                    <div class="space-y-3">
+                                        <div class="border-l-4 border-purple-500 pl-4">
+                                            <h4>Unexplained Weight Loss</h4>
+                                            <p class="text-gray-600">Losing 10 pounds or more without trying.</p>
+                                        </div>
+                                        <div class="border-l-4 border-purple-500 pl-4">
+                                            <h4>Persistent Cough or Hoarseness</h4>
+                                            <p class="text-gray-600">A cough that lasts more than a few weeks.</p>
+                                        </div>
+                                        <div class="border-l-4 border-purple-500 pl-4">
+                                            <h4>Unusual Bleeding or Discharge</h4>
+                                            <p class="text-gray-600">Blood in urine, stool, or when coughing; unusual vaginal bleeding or discharge.</p>
+                                        </div>
+                                        <div class="border-l-4 border-purple-500 pl-4">
+                                            <h4>Lump or Thickening</h4>
+                                            <p class="text-gray-600">Any new lump in breast, testicle, lymph nodes, or elsewhere in the body.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-info">
+                                        <svg class="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <div>
+                                            <h4>Remember: Early Detection Saves Lives</h4>
+                                            <p class="mt-1">
+                                                Persistent symptoms lasting more than 2-3 weeks should be evaluated by a healthcare provider. 
+                                                When cancer is caught early, treatment is often more successful.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-blue-50 border-blue-200 mt-6">
+                        <div class="p-6">
+                            <h3 class="mb-3">Why Early Detection Matters</h3>
+                            <div class="space-y-2 text-gray-700">
+                                <p>• <strong>Cancer:</strong> 5-year survival rates can exceed 90% when caught early, compared to less than 30% for late-stage detection</p>
+                                <p>• <strong>Diabetes:</strong> Early diagnosis and management can prevent or delay serious complications like kidney disease, blindness, and amputations</p>
+                                <p>• <strong>Heart Disease:</strong> Early intervention can prevent heart attacks, reduce the need for invasive procedures, and significantly extend life expectancy</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Switching
+        function switchTab(tabName) {
+            // Hide all main tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all main tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                if (!btn.onclick.toString().includes('switchRiskTab')) {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function switchRiskTab(tabName) {
+            // Hide all risk tabs
+            document.getElementById('diabetes-risk').classList.remove('active');
+            document.getElementById('heart-risk').classList.remove('active');
+            document.getElementById('cancer-risk').classList.remove('active');
+            
+            // Remove active from risk tab buttons
+            const riskButtons = document.querySelectorAll('#assessment-tab .tab-button');
+            riskButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected risk tab
+            document.getElementById(tabName + '-risk').classList.add('active');
+            
+            // Add active to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Diabetes Risk Calculator
+        function calculateDiabetesRisk() {
+            const age = parseInt(document.getElementById('diabetes-age').value);
+            const bmi = parseFloat(document.getElementById('diabetes-bmi').value);
+            const activity = document.getElementById('diabetes-activity').value;
+            const family = document.getElementById('diabetes-family').value;
+
+            let risk = 0;
+
+            if (age > 45) risk += 25;
+            else if (age > 35) risk += 15;
+
+            if (bmi > 30) risk += 30;
+            else if (bmi > 25) risk += 20;
+
+            if (activity === 'low') risk += 20;
+            else if (activity === 'moderate') risk += 10;
+
+            if (family === 'yes') risk += 25;
+
+            risk = Math.min(risk, 100);
+
+            displayRiskResult('diabetes-result', risk);
+        }
+
+        // Heart Risk Calculator
+        function calculateHeartRisk() {
+            const age = parseInt(document.getElementById('heart-age').value);
+            const cholesterol = document.getElementById('heart-cholesterol').value;
+            const bp = document.getElementById('heart-bp').value;
+            const smoking = document.getElementById('heart-smoking').value;
+            const exercise = document.getElementById('heart-exercise').value;
+
+            let risk = 0;
+
+            if (age > 65) risk += 30;
+            else if (age > 50) risk += 20;
+            else if (age > 40) risk += 10;
+
+            if (cholesterol === 'high') risk += 25;
+            else if (cholesterol === 'borderline') risk += 15;
+
+            if (bp === 'high') risk += 25;
+            else if (bp === 'elevated') risk += 15;
+
+            if (smoking === 'yes') risk += 20;
+            if (exercise === 'no') risk += 15;
+
+            risk = Math.min(risk, 100);
+
+            displayRiskResult('heart-result', risk);
+        }
+
+        // Cancer Risk Calculator
+        function calculateCancerRisk() {
+            const age = parseInt(document.getElementById('cancer-age').value);
+            const tobacco = document.getElementById('cancer-tobacco').value;
+            const family = document.getElementById('cancer-family').value;
+            const screening = document.getElementById('cancer-screening').value;
+            const diet = document.getElementById('cancer-diet').value;
+
+            let risk = 0;
+
+            if (age > 60) risk += 30;
+            else if (age > 50) risk += 20;
+            else if (age > 40) risk += 10;
+
+            if (tobacco === 'current') risk += 35;
+            else if (tobacco === 'former') risk += 15;
+
+            if (family === 'yes') risk += 20;
+            if (screening === 'no') risk += 15;
+            if (diet === 'poor') risk += 10;
+
+            risk = Math.min(risk, 100);
+
+            displayRiskResult('cancer-result', risk);
+        }
+
+        function displayRiskResult(elementId, risk) {
+            const resultDiv = document.getElementById(elementId);
+            let alertClass, riskLevel, message;
+
+            if (risk > 60) {
+                alertClass = 'alert-danger';
+                riskLevel = 'High Risk';
+                message = 'Multiple risk factors identified. Schedule a screening immediately and discuss prevention strategies with your doctor.';
+            } else if (risk > 30) {
+                alertClass = 'alert-warning';
+                riskLevel = 'Moderate Risk';
+                message = 'Some risk factors present. Consider improving lifestyle habits and getting regular checkups.';
+            } else {
+                alertClass = 'alert-success';
+                riskLevel = 'Low Risk';
+                message = 'Your current risk is low. Maintain healthy lifestyle choices and follow screening guidelines.';
+            }
+
+            resultDiv.innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Risk Level</span>
+                            <span>${risk}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${risk}%"></div>
+                        </div>
+                    </div>
+                    <div class="alert ${alertClass}">
+                        <svg class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h4>${riskLevel}</h4>
+                            <p class="mt-1">${message}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Symptom Checker
+        function updateSymptomCount() {
+            const checked = document.querySelectorAll('.symptom-check:checked').length;
+            document.getElementById('symptom-count').textContent = checked;
+        }
+
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('symptom-check')) {
+                updateSymptomCount();
+            }
+        });
+
+        function analyzeSymptoms() {
+            const checkedSymptoms = document.querySelectorAll('.symptom-check:checked');
+            const conditions = { diabetes: 0, heart: 0, cancer: 0 };
+
+            checkedSymptoms.forEach(symptom => {
+                const condition = symptom.getAttribute('data-condition');
+                conditions[condition]++;
+            });
+
+            const concerningConditions = Object.entries(conditions)
+                .filter(([_, count]) => count >= 2)
+                .sort((a, b) => b[1] - a[1]);
+
+            const resultDiv = document.getElementById('symptom-result');
+
+            if (concerningConditions.length === 0) {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-info">
+                        <svg class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h4>Symptom Analysis Results</h4>
+                            <p class="mt-1">No significant symptom patterns detected. If you're concerned about any symptoms, consult a healthcare provider.</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const conditionBadges = concerningConditions.map(([condition, count]) => `
+                    <div class="flex items-center gap-2">
+                        <span class="badge badge-danger">${condition.charAt(0).toUpperCase() + condition.slice(1)}</span>
+                        <span>${count} related symptom${count !== 1 ? 's' : ''}</span>
+                    </div>
+                `).join('');
+
+                resultDiv.innerHTML = `
+                    <div class="alert alert-warning">
+                        <svg class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <div>
+                            <h4>Symptom Analysis Results</h4>
+                            <div class="mt-2 space-y-3">
+                                <p>You've selected ${checkedSymptoms.length} symptom${checkedSymptoms.length !== 1 ? 's' : ''} that may indicate:</p>
+                                <div class="space-y-2">${conditionBadges}</div>
+                                <p class="pt-2">
+                                    <strong>Action Required:</strong> Schedule an appointment with your healthcare provider as soon as possible. 
+                                    Early detection and diagnosis significantly improve treatment outcomes.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function resetSymptoms() {
+            document.querySelectorAll('.symptom-check').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            document.getElementById('symptom-result').innerHTML = '';
+            updateSymptomCount();
+        }
+
+        // Screening Schedule Generator
+        function generateSchedule() {
+            const age = parseInt(document.getElementById('schedule-age').value);
+            const gender = document.getElementById('schedule-gender').value;
+
+            if (!age || !gender) {
+                return;
+            }
+
+            const recommendations = [];
+
+            // Blood Pressure
+            if (age >= 18) {
+                recommendations.push({
+                    test: 'Blood Pressure Screening',
+                    frequency: age >= 40 ? 'Annually' : 'Every 2 years',
+                    reason: 'Detect hypertension early to prevent heart disease and stroke',
+                    priority: 'high'
+                });
+            }
+
+            // Cholesterol
+            if (age >= 20) {
+                recommendations.push({
+                    test: 'Cholesterol Screening',
+                    frequency: age >= 40 ? 'Every 1-2 years' : 'Every 5 years',
+                    reason: 'Monitor heart disease risk factors',
+                    priority: age >= 40 ? 'high' : 'medium'
+                });
+            }
+
+            // Diabetes
+            if (age >= 35) {
+                recommendations.push({
+                    test: 'Blood Glucose (Diabetes Screening)',
+                    frequency: 'Every 3 years',
+                    reason: 'Early detection of diabetes or prediabetes',
+                    priority: 'high'
+                });
+            }
+
+            // Colorectal Cancer
+            if (age >= 45 && age <= 75) {
+                recommendations.push({
+                    test: 'Colorectal Cancer Screening (Colonoscopy)',
+                    frequency: 'Every 10 years (or other methods more frequently)',
+                    reason: 'Early detection dramatically improves survival rates',
+                    priority: 'high'
+                });
+            }
+
+            // Mammogram (women)
+            if (gender === 'female' && age >= 40) {
+                recommendations.push({
+                    test: 'Mammogram',
+                    frequency: age >= 50 ? 'Every 1-2 years' : 'Discuss with doctor',
+                    reason: 'Early detection of breast cancer',
+                    priority: 'high'
+                });
+            }
+
+            // Cervical Cancer (women)
+            if (gender === 'female' && age >= 21 && age <= 65) {
+                recommendations.push({
+                    test: 'Pap Smear / HPV Test',
+                    frequency: 'Every 3-5 years (depending on test type)',
+                    reason: 'Detect cervical cancer early',
+                    priority: 'high'
+                });
+            }
+
+            // Prostate (men)
+            if (gender === 'male' && age >= 50) {
+                recommendations.push({
+                    test: 'Prostate Cancer Screening (PSA Test)',
+                    frequency: 'Discuss with doctor - individualized decision',
+                    reason: 'Early detection of prostate cancer',
+                    priority: 'medium'
+                });
+            }
+
+            // Lung Cancer
+            if (age >= 50 && age <= 80) {
+                recommendations.push({
+                    test: 'Low-Dose CT Scan (for smokers)',
+                    frequency: 'Annually',
+                    reason: 'If you have a smoking history, early lung cancer detection',
+                    priority: 'high'
+                });
+            }
+
+            // Skin Examination
+            if (age >= 18) {
+                recommendations.push({
+                    test: 'Skin Examination',
+                    frequency: 'Annual self-exam, professional exam if at risk',
+                    reason: 'Early detection of skin cancer',
+                    priority: 'medium'
+                });
+            }
+
+            // Bone Density (women)
+            if (gender === 'female' && age >= 65) {
+                recommendations.push({
+                    test: 'Bone Density Test (DEXA Scan)',
+                    frequency: 'At least once, then as recommended',
+                    reason: 'Screen for osteoporosis',
+                    priority: 'medium'
+                });
+            }
+
+            displaySchedule(recommendations);
+        }
+
+        function displaySchedule(recommendations) {
+            const resultDiv = document.getElementById('schedule-result');
+
+            if (recommendations.length === 0) {
+                resultDiv.innerHTML = '<p class="text-gray-600">No recommendations available for the provided information.</p>';
+                return;
+            }
+
+            const recCards = recommendations.map(rec => {
+                const borderColor = rec.priority === 'high' ? '#dc2626' : '#f59e0b';
+                const badgeClass = rec.priority === 'high' ? 'badge-danger' : 'badge-secondary';
+                const badgeText = rec.priority === 'high' ? 'High Priority' : 'Recommended';
+
+                return `
+                    <div class="card" style="border-left: 4px solid ${borderColor}">
+                        <div class="p-4 space-y-2">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h4>${rec.test}</h4>
+                                <span class="badge ${badgeClass}">${badgeText}</span>
+                            </div>
+                            <p class="text-gray-600">${rec.reason}</p>
+                            <div class="flex items-center gap-2 text-blue-600">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Frequency: ${rec.frequency}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            resultDiv.innerHTML = `
+                <div class="space-y-4 mt-6">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <h3>Your Recommended Screenings</h3>
+                    </div>
+                    <div class="space-y-3">${recCards}</div>
+                    <div class="card bg-blue-50 border-blue-200">
+                        <div class="p-4">
+                            <p class="text-blue-900">
+                                <strong>Next Steps:</strong> Share this screening schedule with your healthcare provider. 
+                                They can help you determine the best timing and any additional screenings based on your personal and family medical history.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Accordion Toggle
+        function toggleAccordion(id) {
+            const content = document.getElementById(id + '-content');
+            const icon = document.getElementById(id + '-icon');
+            
+            content.classList.toggle('open');
+            icon.classList.toggle('rotate-180');
+        }
+    </script>
+</body>
+</html>
